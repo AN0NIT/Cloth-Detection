@@ -1,14 +1,18 @@
 <html>
 <head>
-  <style>
+  <!--<style>
   body {background-color: lightgreen  ;}
   h1   {color: purple;}
   h2   {color: red;}
-  </style>
+  </style>-->
 <title>success</title>
 </head>
 <body>
-<h1>File uploaded successfully!</p>
-<h2>File Name: {{name}}</p>
+<img src="{{ url_for('static', filename='images/image5')}}" style="position:fixed;      width: 70px;height: 70px; padding-left: 30px;">
+
+<h1 style="color:#000000; font-size:50px; font-family: monospace; padding-left: 150px">File uploaded successfully!</p>
+<h2 style="color: dodgerblue; padding-left: 900px;">File Name: {{name}}</p>
+
+<img src="{{ url_for('static', filename='images/image2.svg')}}" style="position:fixed;padding-top:80px;  width:350px; height:300px">
 </body>
 </html>

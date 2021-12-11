@@ -1,17 +1,22 @@
-<html>
+ <html>
 <head>
-  <style>
-  body {background-color: powderblue;}
-  h1   {color: purple;}
-  p    {color: red;}
-  </style>
-    <title style="color:blue;">upload</title>
-    <h1> Upload an Image </h1>
+  <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
 </head>
+
 <body>
-    <form action = "/success" method = "post" enctype="multipart/form-data">
-        <input type="file" name="file" />
-        <input type = "submit" value="Upload">
-    </form>
+  <img src="{{ url_for('static', filename='images/image3')}}" style="position:fixed; padding-top: -50px;  width: 180px;height: 60px;">
+  
+  <!--img src="{{ url_for('static', filename='images/image4')}}" style="background-size: 50% 0%;">-->
+    
+    <div class="button" style="padding-left: 80px; padding-top: 250px;">
+        <form action = "/success" method = "post" enctype="multipart/form-data" >
+        <input  type="file" name="file" style="background-color:  #879da1; color: black; font-family:monospace; font-size: 25px; text-align: center; padding: 10px;padding-right: 0PX; border-radius: 8px">
+        <input  type = "submit" value="Upload" style="background-color:dodgerblue; color: black; font-family:monospace; font-size: 25px;text-align: center; padding: 10px;border-radius: 8px" >
+        </form>
+    </div>
+    
+  
+  <img src="{{ url_for('static', filename='images/image1.svg')}}" style="position:fixed;   padding-left:950px;padding-bottom:30PX; width: 350px;height: 300px;">
+    
 </body>
 </html>
