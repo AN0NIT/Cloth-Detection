@@ -1,7 +1,7 @@
 # inorder to start the database
 - open "python" in cmd or ps
 ## import db from app.py like:
-``from app import db``
+``from flask_app import db``
 ## then type:
 ``db.create_all()``
 ## Now open the database.db in sqlite3
