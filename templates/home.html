@@ -6,10 +6,40 @@
     <meta http-http-equiv="X-UV-Compatible", content="chrome">
     <meta name="viewport" content="width=device-width, initial-scale">
     <title> Home Page</title>
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
 </head>
-<body>
-  <h1> Suyati Home Page</h1>
-  <a href="{{ url_for('login')}}">Login</a><br>
-  <a href="{{ url_for('register')}}">Register</a>
+
+<body style="background-color:white;font-family: cursive;font-weight: bold;">
+  
+  <header style=" display:flex; justify-content:flex-end; align-items:center; ">
+    <nav style=" width:100%; height:70px; margin-left:-10px; margin-top:-8px; margin-right:0px; background-color:dodgerblue; border-color:dodgerblue; ">
+      <img class="logo" src="/static/images/image3" alt="logo" style="width:200px; height:50px; padding-top: 5px; padding-bottom: 5px;padding-left: 10px;">
+
+      <ul class="nav_links" style="float: right; font-family:fantasy ; font-size: 15px;">
+        
+        <li style="padding: 10px 15px 10px 15px"><a href="#">About us</a></li>
+        <li style="padding: 10px 15px 10px 15px"><a href="#">Contact</a></li>
+        <!--<li style="padding: 10px 15px 10px 15px; font-weight:bold;"><a href="#">Logout</a></li>-->
+      </ul>
+      <img src="static/images/image17" style="width:1350px; height:200px; margin-top:-10px">
+    </nav>
+  </header>
+
+
+
+<h2 style="padding-left: 230px;color: black;font-size: 50px; font-weight: bold; int-family: cursive;">Welcome to Cloth Detection System!</h2>
+<p style="padding-left: 360px;font-family: cursive;font-size: 20px; ">Here we provide our customers with the best possible results</p>
+
+
+  <!--<h1> Suyati Home Page</h1>-->
+  <div style=" padding-top:20px; padding-left:360px;text-align: center;">
+     <div style=" background-color:#ccffff;width:70%; height: 160px; border-radius: 10px;  border-color:white">
+    <p style="font-family: cursive;font-size: 20px;font-weight: bold;text-align: left; ">-> Upload the file/image to be searched</p>
+    <p style="font-family: cursive;font-size: 20px;font-weight: bold;text-align: left;">-> The desired result will be displayed within seconds</p>
+    <p style="font-family: cursive;font-size: 20px;font-weight: bold; text-align: right; ">Powered by Suyati-ASIET</p>
+    <div style="padding-top:50px;"></div>
+    <a style="background-color:dodgerblue; display: inline-block; border-radius:10px; box-shadow: 3px 3px gray;width: 150px; height: 50px;margin-right: 10px;padding: 5px 5px 5px 5px;font-family: cursive; font-weight: bold;font-family: cursive; font-weight: bold;" href="{{ url_for('login')}}">Login</a>
+    <a style="background-color:dodgerblue;text-align: center; display: inline-block; border-radius:10px; box-shadow: 3px 3px gray;width: 150px; height: 50px; padding: 5px 5px 5px 5px;font-family: cursive; font-weight: bold;" href="{{ url_for('register')}}">Register</a>
+  </div>
 </body>
 </html>
