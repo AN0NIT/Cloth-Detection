@@ -69,16 +69,6 @@ class LoginForm(FlaskForm):
 def home():
     return render_template("home.html")
 
-"""
-@app.route('/', methods=['POST'])
-def check_for_login():
-    username = request.form['username']
-    password = request.form['password']
-    #return render_template("home.html")
-    print(f"[+] {username}")
-    print(f"[+] {password}")
-    return render_template("index.html")
-"""
 
 @app.route('/login', methods=['GET','POST'])
 def login():
