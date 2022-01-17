@@ -8,7 +8,7 @@
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
-<link rel="stylesheet" type="text/css" href="static/css/style.css">
+<link rel="stylesheet" type="text/css" href="static/css/style1.css">
 
 
 <body>
@@ -16,7 +16,7 @@
 		<input type="checkbox" id="nav-check">
 		<div class="nav-header">
 		  <div class="nav-title">
-			<img class="logo" src="/static/images/suyati_logo.svg" alt="logo" style="width: 200px;height: 40px;">
+			<img class="logo" src="/static/images/suyati_logo.svg" alt="logo" style="width: 500px;height: 40px; padding-right: 400px;">
 		  </div>
 		</div>
 		<div class="nav-btn">
@@ -26,28 +26,31 @@
 			<span></span>
 		  </label>
 		</div>
-		
+
 		<div class="nav-links">
-		  <a href="home.html" target="_blank">Logout</a>
+		  <a href="login.html" target="_blank">Logout</a>
 		</div>
 	  </div>
-	
+
 	<div class="frame">
 		<div class="center">
 			<div class="title">
 				<h1>Drop file to upload</h1>
 			</div>
-	
+
+
+			<form action = "/success" method = "post" enctype="multipart/form-data" >
 			<div class="dropzone">
 				<img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
-				<input type="file" class="upload-input" />
+				<input type="file" name="file" class="upload-input" />
 			</div>
-			<button class="btn" name="uploadbutton">Upload file</button>
-		         
+			<div style="padding-top:5px;">
+			<button class="btn" style="padding-left:5px;" name="uploadbutton" type = "submit" value="Upload">Upload file</button>
+			</div>
+		</form>
 		</div>
-		
+
 	</div>
 
 </body>
 </html>
-    

@@ -65,9 +65,9 @@ class LoginForm(FlaskForm):
     password = PasswordField(validators=[InputRequired(), Length(min=8, max=20)], render_kw={"placeholder":"Password"})
     submit = SubmitField("Login")
 
-@app.route('/')
+@app.route('/', methods=['GET','POST'])
 def home():
-    return render_template("home.html")
+    return render_template("login.html")
 
 
 @app.route('/login', methods=['GET','POST'])
@@ -89,7 +89,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return render_template("login.html")
 
 @app.route('/register', methods=['GET','POST'])
 def register():
@@ -100,7 +100,10 @@ def register():
         PASSW = request.form['password']
         REPASS = request.form['repassword']
         if REPASS == PASSW:
+            salt = app.config['SECRET_KEY']
             hashed_password = bcrypt.generate_password_hash(PASSW)
+            #hashed_password = bcrypt.hashpw(PASSW, salt)
+            print('User:',USRN,':',hashed_password)
             new_user = User(username=USRN, password=hashed_password)
             db.session.add(new_user)
             db.session.commit()
