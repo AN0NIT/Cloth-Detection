@@ -22,11 +22,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SECRET_KEY'] = 'testingkeybutnotrealkey'
 
 UPLOAD_FOLDER = 'upload/'
+ALLOWED_EXTENSIONS = ('png', 'jpg', 'jpeg', 'gif')
+
 if not os.path.isdir(UPLOAD_FOLDER):
     os.mkdir(UPLOAD_FOLDER)
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -66,6 +67,10 @@ class LoginForm(FlaskForm):
     password = PasswordField(validators=[InputRequired(), Length(min=8, max=20)], render_kw={"placeholder":"Password"})
     submit = SubmitField("Login")
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 @app.route('/')
 def home():
     return redirect(url_for('login'))
@@ -84,7 +89,7 @@ def login():
                 login_user(user)
                 return redirect(url_for('dashboard'))
         else:
-            flash("Incorrect username or password.")
+            flash("Incorrect username or password.","error")
             return render_template("login.html")
     else:
         return render_template("login.html")
@@ -94,7 +99,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash("You are now logged out.")
+    flash("You are now logged out.", "success")
     return redirect(url_for('login'))
 
 @app.route('/register', methods=['GET','POST'])
@@ -112,10 +117,11 @@ def register():
             new_user = User(username=USRN, password=hashed_password)
             db.session.add(new_user)
             db.session.commit()
+            flash("Account created succesfully.","success")
             return redirect(url_for('login'))
         else:
             #raise ValidationError("Passwords dont match.")
-            flash("Passwords dont match.")
+            flash("Passwords dont match.","error")
             return render_template("register.html")
     else:
         return render_template("register.html")
@@ -135,12 +141,16 @@ def dashboard():
             if file.filename == '' or file.filename is None:
                 flash('No selected file')
                 return redirect(request.url)
+            print('{file} and {allowed_file(file.filename)}')
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
                 #flash("fname:",filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 #flash(file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)))
-                return redirect(url_for('success.html', name=filename))
+                return redirect(url_for('success', name=filename))
+            else:
+                flash("File type not allowed.")
+                return redirect(request.url)
         return render_template("dashboard.html")
     except PermissionError as e:
         return redirect(request.url)
@@ -150,10 +160,15 @@ def success():
     if request.method == 'POST':
         f = request.files['file']
         if f.filename is None or f.filename == '':
-            return redirect(request.url)
+            flash('No selected file')
+            return redirect(url_for('dashboard'))
             #return redirect('/')
-        f.save(os.path.join(app.config['UPLOAD_FOLDER'],f.filename))
-        return render_template("success.html", name=f.filename)
+        elif f.filename.endswith(ALLOWED_EXTENSIONS):
+            f.save(os.path.join(app.config['UPLOAD_FOLDER'],f.filename))
+            return render_template("success.html", name=f.filename)
+        else:
+            flash('Invalid file extention')
+            return redirect(url_for('dashboard'))
 
 if __name__ == '__main__':
     app.run(debug=True)
