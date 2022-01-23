@@ -28,7 +28,10 @@
 		</div>
 
 		<div class="nav-links">
-		  <a href="login.html" target="_blank">Logout</a>
+		  <!--
+			"_blank" opens new tab"
+			<a href="{{ url_for('logout')}}" target="_blank">Logout</a> -->
+			<a href="{{ url_for('logout')}}">Logout</a>
 		</div>
 	  </div>
 
@@ -37,8 +40,6 @@
 			<div class="title">
 				<h1>Drop file to upload</h1>
 			</div>
-
-
 			<form action = "/success" method = "post" enctype="multipart/form-data" >
 			<div class="dropzone">
 				<img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />

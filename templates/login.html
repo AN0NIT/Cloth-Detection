@@ -49,6 +49,9 @@
               <div class="text-center mb-5">
               <h3>Login</h3>
               <!-- <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p> -->
+              {% for mesg in get_flashed_messages() %}
+                <h5>{{ mesg }}</h5>
+              {% endfor %}
               </div>
               <div class="text-right mb-9">
               <h9>Don't Have an Account?

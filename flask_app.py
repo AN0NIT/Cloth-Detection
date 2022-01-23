@@ -6,6 +6,7 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
 import os
+import time
 
 # Initialize flask app
 app = Flask(__name__)
@@ -65,9 +66,9 @@ class LoginForm(FlaskForm):
     password = PasswordField(validators=[InputRequired(), Length(min=8, max=20)], render_kw={"placeholder":"Password"})
     submit = SubmitField("Login")
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/')
 def home():
-    return render_template("login.html")
+    return redirect(url_for('login'))
 
 
 @app.route('/login', methods=['GET','POST'])
@@ -82,14 +83,19 @@ def login():
             if bcrypt.check_password_hash(user.password, PASSW):
                 login_user(user)
                 return redirect(url_for('dashboard'))
+        else:
+            flash("Incorrect username or password.")
+            return render_template("login.html")
     else:
         return render_template("login.html")
 
-@app.route('/logout', methods=['GET','POST'])
+
+@app.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return render_template("login.html")
+    flash("You are now logged out.")
+    return redirect(url_for('login'))
 
 @app.route('/register', methods=['GET','POST'])
 def register():
@@ -103,7 +109,6 @@ def register():
             salt = app.config['SECRET_KEY']
             hashed_password = bcrypt.generate_password_hash(PASSW)
             #hashed_password = bcrypt.hashpw(PASSW, salt)
-            print('User:',USRN,':',hashed_password)
             new_user = User(username=USRN, password=hashed_password)
             db.session.add(new_user)
             db.session.commit()
