@@ -89,7 +89,7 @@ def login():
                 login_user(user)
                 return redirect(url_for('dashboard'))
         else:
-            flash("Incorrect username or password.","error")
+            flash("Incorrect username or password!","error")
             return render_template("login.html")
     else:
         return render_template("login.html")
