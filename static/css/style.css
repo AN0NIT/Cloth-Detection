@@ -64,3 +64,17 @@ padding: 10px;
 padding-right: 0PX; 
 border-radius: 8px
 }
+
+.pop{
+  padding-left: 100px;
+}
+
+.msg{
+    color: white; 
+    background-color: rgb(255, 72, 72); 
+    width: 330px; 
+    height: 25px; 
+    border: 1px dashed black; 
+    border-radius: 3px;
+    text-align: center;
+}
