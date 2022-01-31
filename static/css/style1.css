@@ -137,15 +137,17 @@
 	text-align: center;
 }
 .pop{
-  padding-left: 100px;
+  color: red;
+  background-color: white;
+  text-align: center;
 }
 
 .msg{
-  color: white; 
-  background-color: red; 
-  width: 330px; 
-  height: 25px; 
-  border: 3px dashed black; 
+  color: white;
+  background-color: red;
+  width: 330px;
+  height: 25px;
+  border: 3px dashed black;
   border-radius: 3px;
   text-align: center;
 }

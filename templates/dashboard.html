@@ -8,15 +8,12 @@
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="static/css/style1.css">
+<link type="text/css" href="/static/css/bootstrap.min.css">
 
 <body>
 	<div class="nav">
+	 	<img class="logo" src="/static/images/suyati_logo.svg" alt="logo" style="width: 500px;height: 90px; padding-right: 375px;padding-bottom: 30px">
 		<input type="checkbox" id="nav-check">
-		<div class="nav-header">
-		  <div class="nav-title">
-			<img class="logo" src="/static/images/suyati_logo.svg" alt="logo" style="width: 500px;height: 40px; padding-right: 400px;">
-		  </div>
-		</div>
 		<div class="nav-btn">
 		  <label for="nav-check">
 			<span></span>
@@ -32,21 +29,28 @@
 			<a href="{{ url_for('logout')}}">Logout</a>
 		</div>
 	  </div>
-		{% for mesg in get_flashed_messages() %}
-			<h5>{{ mesg }}</h5>
+		{% with messages = get_flashed_messages(with_categories=true) %}
+		{% if messages %}
+			{% for category, message in messages %}
+		<!-- <div class="alert alert-{{ category }}"> -->
+		<div class="pop">
+					<h5>{{ message }}</h5>
 		{% endfor %}
+		</div>
+		{% endif %}
+		{% endwith %}
 	<div class="frame">
 		<div class="center">
 			<div class="title">
 				<h1>Drop file to upload</h1>
 			</div>
 			<form action = "/success" method = "post" enctype="multipart/form-data" >
-		    <div class="new">		
+		    <div class="new">
 				<div class="dropzone">
 				  <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
 				<input type="file" name="file" class="upload-input" />
 			</div>
-		    </div>	
+		    </div>
 			<div style="padding-top:5px;">
 			<button class="btn" style="padding-left:5px;" name="uploadbutton" type = "submit" value="Upload">Upload file</button>
 			</div>

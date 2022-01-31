@@ -35,7 +35,7 @@
     </nav>
   </header>
   <h3 style="padding-left: 460px;font-size: 30px; color: dodgerblue; ">Welcome to Cloth Detection System!</h3>
-<p style="padding-left: 460px;font-size: 2opx; ">Here we provide our customers with the best possible results</p>
+<p style="padding-left: 460px;font-size: 20px; ">Here we provide our customers with the best possible results</p>
 
 
 
@@ -48,12 +48,21 @@
             <div class="form-block">
               <div class="text-center mb-5">
               <h3 style="color: dodgerblue;">Login</h3>
-              <div class="pop">
-              <!-- <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p> -->
+              <!-- <div class="pop">
+               <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
               {% for mesg in get_flashed_messages() %}
                 <h5>{{ mesg }}</h5>
               {% endfor %}
-              </div>
+            </div> -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                  <h5>{{ message }}</h5>
+            {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
               </div>
               <div class="text-right mb-9">
               <h9>Don't Have an Account?
