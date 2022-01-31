@@ -22,7 +22,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SECRET_KEY'] = 'testingkeybutnotrealkey'
 
 UPLOAD_FOLDER = 'upload/'
-ALLOWED_EXTENSIONS = ('png', 'jpg', 'jpeg', 'gif')
+ALLOWED_EXTENSIONS = ('png', 'jpg', 'jpeg', 'gif','PNG')
 
 if not os.path.isdir(UPLOAD_FOLDER):
     os.mkdir(UPLOAD_FOLDER)
