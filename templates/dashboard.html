@@ -1,51 +1,59 @@
+<!DOCTYPE html>
 <html>
-
 <head>
-  <link rel="stylesheet" type="text/css" href="static/css/style.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>upload</title>
 </head>
 
-<body >
-  
-  <header style=" display:flex; justify-content:flex-end; align-items:center; ">
-    <nav style=" width:100%; height:60px; margin-left:-10px; margin-top:-8px; margin-right:0px; background-color:dodgerblue; border-color:dodgerblue; ">
-      <img class="logo" src="/static/images/suyati_logo.svg" alt="logo" style="width:200px; height:50px; padding-top: 5px; padding-bottom: 5px;">
-      <ul class="nav_links" style="float: right; font-family:roboto ; font-size: 15px;">
-        <li style="padding: 5px 15px 10px 15px; "><a style="color:yellow;" href="{{ url_for('home')}}">Logout</a></li>
-      </ul>
-      <img src="static/images/bg_10.png" style="width:1350px; height:180px; margin-top:-15px">
-    </nav>
-  </header>
-  <br></br>
-  <div style=" padding-left:330px; padding-top:180px;">
-    <div style="background-color:#f5f5f5;float: left; width: 680px; height: 250px; border-radius: 20px;padding-right: 30px; ">
-      <img src="static/images/symbol.png" style="width: 50px;height: 50px; padding-left: 300px;padding-top:20px;">
-    <h1 style="color: black; padding-left: 190px; font-family:roboto;">Please upload here :</h1>
-    <div class="button" style="align-self: center; padding-top: 0px;">
-      
-      <form action = "/success" method = "post" enctype="multipart/form-data" >
-        
-        <input  type="file" name="file" style="background-color:#a8afba ; color: black; font-family:roboto; font-size: 25px; text-align: center;border-radius: 8px; padding-left:10px ; align-self:left;">
-        
-        
-        <input  type = "submit" value="Upload" style="background-color:dodgerblue; color: black; font-family:roboto; font-size: 25px;text-align: center; ;border-radius: 8px; padding-left: 10px; box-shadow: 3px 3px #00000;" >
-      
-      </form>
-    
-    </div>
-  
-  </div>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="static/css/style1.css">
 
-  <!--div style=" padding-left:330px; padding-top:30px;">
-    <form class="fileUpload">
-  <input type="file" class="fileElem" multiple>
-  <label class="fileSelect">Upload File</label>
-  <h4>Usage</h4>
-  <progress value="40" max="100"></progress>
-  <p>4.00 GB out of 10 GB (40%) (<a href="#" class="upgrade">Upgrade</a>)</p>
-</form>
-  </div>
-  
+<body>
+	<div class="nav">
+		<input type="checkbox" id="nav-check">
+		<div class="nav-header">
+		  <div class="nav-title">
+			<img class="logo" src="/static/images/suyati_logo.svg" alt="logo" style="width: 500px;height: 40px; padding-right: 400px;">
+		  </div>
+		</div>
+		<div class="nav-btn">
+		  <label for="nav-check">
+			<span></span>
+			<span></span>
+			<span></span>
+		  </label>
+		</div>
+
+		<div class="nav-links">
+		  <!--
+			"_blank" opens new tab"
+			<a href="{{ url_for('logout')}}" target="_blank">Logout</a> -->
+			<a href="{{ url_for('logout')}}">Logout</a>
+		</div>
+	  </div>
+		{% for mesg in get_flashed_messages() %}
+			<h5>{{ mesg }}</h5>
+		{% endfor %}
+	<div class="frame">
+		<div class="center">
+			<div class="title">
+				<h1>Drop file to upload</h1>
+			</div>
+			<form action = "/success" method = "post" enctype="multipart/form-data" >
+		    <div class="new">		
+				<div class="dropzone">
+				  <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
+				<input type="file" name="file" class="upload-input" />
+			</div>
+		    </div>	
+			<div style="padding-top:5px;">
+			<button class="btn" style="padding-left:5px;" name="uploadbutton" type = "submit" value="Upload">Upload file</button>
+			</div>
+		</form>
+		</div>
+
+	</div>
+
 </body>
-
 </html>
-    
