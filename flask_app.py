@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, redirect, request, flash
+from flask import Flask, render_template, url_for, redirect, request, flash, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
@@ -7,6 +7,7 @@ from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
 import os
 import time
+import random
 
 # Initialize flask app
 app = Flask(__name__)
@@ -24,7 +25,7 @@ app.config['SECRET_KEY'] = 'testingkeybutnotrealkey'
 #app.config['TESTING'] = False
 
 
-UPLOAD_FOLDER = 'upload/'
+UPLOAD_FOLDER = 'static/upload/'
 ALLOWED_EXTENSIONS = ('png', 'jpg', 'jpeg', 'gif')
 
 if not os.path.isdir(UPLOAD_FOLDER):
@@ -145,6 +146,8 @@ def dashboard():
 
 @app.route('/success', methods = ['POST'])
 def success():
+    cloths = ["shirt","hoodie","tshirt","suit"]
+    type = random.choice(cloths)
     if request.method == 'POST':
         f = request.files['file']
         if f.filename is None or f.filename == '':
@@ -153,10 +156,16 @@ def success():
             #return redirect('/')
         elif f.filename.endswith(ALLOWED_EXTENSIONS):
             f.save(os.path.join(app.config['UPLOAD_FOLDER'],f.filename))
-            return render_template("success.html", name=f.filename)
+            flash(f"It is a {type}","success")
+            return render_template("success.html", fname='upload/'+f.filename)
         else:
             flash('Invalid file extention',"danger")
             return redirect(url_for('dashboard'))
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static/images/'),'favicon.ico')
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,18 +1,115 @@
-<html>
-<head>
-  <!--<style>
-  body {background-color: lightgreen  ;}
-  h1   {color: purple;}
-  h2   {color: red;}
-  </style>-->
-<title>success</title>
-</head>
-<body>
-<img src="{{ url_for('static', filename='images/image5')}}" style="position:fixed;      width: 70px;height: 70px; padding-left: 30px;">
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="/static/fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="/static/css/owl.carousel.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    <!--div class="elementor-image suyati-logo center"> <a href="https://suyati.com/" class="main-logo"> <img src="/static/images/suyati_logo.svg" title="" alt="" width="160"> </a-->
+    <title>Output</title>
+  </head>
+  <body>
+    <header style=" display:flex; justify-content:flex-end; align-items:center; ">
+    <nav style=" width:100%; height:50px; margin-left:-10px; margin-top:0px; margin-right:0px; background-color:dodgerblue; border-color:dodgerblue; ">
+      <img class="logo" src="/static/images/suyati_logo.svg" alt="logo" style="width:200px; height:50px; padding-top: 0px; padding-bottom: 5px; padding-right: 60px;">
+        <ul class="nav_links" style="float: right; ">
+          <li style="padding:5px 20px 15px 20px;"><a style="color:white;font-size: 20px; font-weight: 400;" href="{{ url_for('logout')}}">Logout</a></li>
+          <!--<li style="padding: 10px 15px 10px 15px; font-weight:bold;"><a href="#">Logout</a></li>-->
+        </ul>
+      </nav>
+    </header>
+<!-- <img src="{{ url_for('static', filename='images/image5')}}" style="position:fixed;      width: 70px;height: 70px; padding-left: 30px;"> -->
+
+<!--
 <h1 style="color:#000000; font-size:50px; font-family: monospace; padding-left: 150px">File uploaded successfully!</p>
-<h2 style="color: dodgerblue; padding-left: 900px;">File Name: {{name}}</p>
+<h2 style="color: dodgerblue; padding-left: 900px;">File Name: {{name}}</p> -->
+<br></br>
 
-<img src="{{ url_for('static', filename='images/image2.svg')}}" style="position:fixed;padding-top:80px;  width:350px; height:300px">
+
+<div class="row">
+  <div class="col" style="padding-left:5%;">
+		{% with messages = get_flashed_messages(with_categories=true) %}
+		{% if messages %}
+			{% for category, message in messages %}
+			<div class="alert alert-{{ category }}" style="max-width:75%; max-height: 75%;text-align: center;position:center;padding-left:5%" >
+						<h5>{{ message }}</h5>
+			{% endfor %}
+			</div>
+		{% endif %}
+		{% endwith %}
+		{% if fname %}
+		<img class="img-responsive" src="{{url_for('static', filename=fname)}}" style="max-width:75%; max-height: 75%;position:center">
+		{% endif %}
+  </div>
+  <div class="col" style="padding-right:40px;">
+		<div class="alert alert-info"  style="max-width:105%; max-height: 105%;text-align:center;">
+					<h5>Prediction Graph</h5>
+		</div>
+				<img class="img-responsive" src="{{ url_for('static', filename='images/output.jpg')}}" style="max-width:105%; max-height: 105%;position:center;">
+  </div>
+</div>
+
+<div style="padding-top:30px;" class="half">
+	<div class="bg order-1 order-md-2" style="background-image: url('/static/images/bg_8');"></div>
+	<div class="contents order-2 order-md-1">
+		<div style="background-color: whitesmoke; padding-top: 20px; padding-bottom: 20px ; align-self: center;" class="container">
+			<div class="row align-items-center justify-content-center">
+				<div class="col-md-6">
+					<div class="form-block">
+						<div class="text-center mb-5">
+							<form action="#" method="post">
+							<div class="form-group first">
+								<label for="feedback">Your Feedback</label>
+								<input type="text" class="form-control" placeholder="Submit your valueable feedback" name="feedback" id="feedback">
+							</div>
+							<input type="submit" value="Submit" class="btn btn-block btn-primary">
+							</form>
+						</div>
+					</div>
+					</div>
+					</div>
+					</div>
+					</div>
+				</div>
+
+<!--
+  <section id="work">
+      <div class="container">
+				{% with messages = get_flashed_messages(with_categories=true) %}
+				{% if messages %}
+					{% for category, message in messages %}
+				<div class="alert alert-{{ category }}" style="max-width:300px; max-height: 350px;text-align: center">
+							<h5>{{ message }}</h5>
+				{% endfor %}
+				</div>
+				{% endif %}
+				{% endwith %}
+				<div style="padding-left: 600px;">
+				<div class="alert alert-info" style="max-width:200px; max-height: 200px;">
+							<h5>Prediction Graph</h5>
+				</div>
+			</div>
+			{% if fname %}
+          <div class="row">
+							<img class="img-responsive" src="{{url_for('static', filename=fname)}}" style="max-width:300px; max-height: 350px">
+						<img class="img-responsive" src="{{ url_for('static', filename='images/output.jpg')}}" style="max-width:790px; max-height: 790px">
+          </div>
+			{% endif %}
+      </div>
+  </section>
+-->
+
+
+<!-- <img src="{{ url_for('static', filename='images/image2.svg')}}" style="position:fixed;padding-top:80px;  width:350px; height:300px"> -->
 </body>
 </html>
