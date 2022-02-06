@@ -144,23 +144,30 @@ def dashboard():
     except PermissionError as e:
         return redirect(request.url)
 
-@app.route('/success', methods = ['POST'])
+@app.route('/success', methods = ['GET','POST'])
 def success():
     cloths = ["shirt","hoodie","tshirt","suit"]
     type = random.choice(cloths)
     if request.method == 'POST':
-        f = request.files['file']
-        if f.filename is None or f.filename == '':
-            flash('No selected file',"warning")
-            return redirect(url_for('dashboard'))
-            #return redirect('/')
-        elif f.filename.endswith(ALLOWED_EXTENSIONS):
-            f.save(os.path.join(app.config['UPLOAD_FOLDER'],f.filename))
-            flash(f"It is a {type}","success")
-            return render_template("success.html", fname='upload/'+f.filename)
-        else:
-            flash('Invalid file extention',"danger")
-            return redirect(url_for('dashboard'))
+        try:
+            feedback = request.form['feedback']
+            if feedback != '' or feedback is not None:
+                # here the feedback variable can be stored to a csv file or for storing feedback's from users
+                flash("Thank you for your valuable feedback.","success")
+                return redirect(url_for('dashboard'))
+        except:
+            f = request.files['file']
+            if f.filename is None or f.filename == '':
+                flash('No selected file',"warning")
+                return redirect(url_for('dashboard'))
+                #return redirect('/')
+            elif f.filename.endswith(ALLOWED_EXTENSIONS):
+                f.save(os.path.join(app.config['UPLOAD_FOLDER'],f.filename))
+                flash(f"It is a {type}","success")
+                return render_template("success.html", fname='upload/'+f.filename)
+            else:
+                flash('Invalid file extention',"danger")
+                return redirect(url_for('dashboard'))
 
 @app.route('/favicon.ico')
 def favicon():

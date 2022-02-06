@@ -34,8 +34,6 @@
 <h1 style="color:#000000; font-size:50px; font-family: monospace; padding-left: 150px">File uploaded successfully!</p>
 <h2 style="color: dodgerblue; padding-left: 900px;">File Name: {{name}}</p> -->
 <br></br>
-
-
 <div class="row">
   <div class="col" style="padding-left:5%;">
 		{% with messages = get_flashed_messages(with_categories=true) %}
@@ -51,22 +49,17 @@
 		<img class="img-responsive" src="{{url_for('static', filename=fname)}}" style="max-width:75%; max-height: 75%;position:center;padding-top:25px;padding-left:19px">
 		{% endif %}
   </div>
-<<<<<<< HEAD
   <div class="col" style="padding-right:5%;">
 		   <div class="alert alert-info"  style="max-width:105%; max-height: 105%;text-align:center;">
 					<h5>Prediction Graph</h5>
 		   </div>
-=======
   <div class="col" style="padding-right:40px;">
 	   <div style="padding-left: 50px;">
-		<div class="alert alert-info"  style="max-width:95%; max-height: 105%;text-align:center;">
-					<h5>Prediction Graph</h5>
-		</div>
+
 	   </div>
-		
->>>>>>> 3bdcb7bf9b23c703a579f05275565a8699ce9072
 				<img class="img-responsive" src="{{ url_for('static', filename='images/output.jpg')}}" style="max-width:105%; max-height: 105%;position:center;">
   </div>
+</div>
 </div>
 
 <div style="padding-top:30px;" class="half">
