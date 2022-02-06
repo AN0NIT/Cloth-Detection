@@ -41,7 +41,7 @@
 		{% with messages = get_flashed_messages(with_categories=true) %}
 		{% if messages %}
 			{% for category, message in messages %}
-			<div class="alert alert-{{ category }}" style="max-width:75%; max-height: 75%;text-align: center;position:center;padding-left:5%" >
+			<div class="alert alert-{{ category }}" style="max-width:72%; max-height: 75%;text-align: center;position:center;padding-left:5%" >
 						<h5>{{ message }}</h5>
 			{% endfor %}
 			</div>
@@ -51,10 +51,20 @@
 		<img class="img-responsive" src="{{url_for('static', filename=fname)}}" style="max-width:75%; max-height: 75%;position:center;padding-top:25px;padding-left:19px">
 		{% endif %}
   </div>
+<<<<<<< HEAD
   <div class="col" style="padding-right:5%;">
 		   <div class="alert alert-info"  style="max-width:105%; max-height: 105%;text-align:center;">
 					<h5>Prediction Graph</h5>
 		   </div>
+=======
+  <div class="col" style="padding-right:40px;">
+	   <div style="padding-left: 50px;">
+		<div class="alert alert-info"  style="max-width:95%; max-height: 105%;text-align:center;">
+					<h5>Prediction Graph</h5>
+		</div>
+	   </div>
+		
+>>>>>>> 3bdcb7bf9b23c703a579f05275565a8699ce9072
 				<img class="img-responsive" src="{{ url_for('static', filename='images/output.jpg')}}" style="max-width:105%; max-height: 105%;position:center;">
   </div>
 </div>
@@ -69,7 +79,7 @@
 						<div class="text-center mb-5">
 							<form action="#" method="post">
 							<div class="form-group first">
-								<label for="feedback">Your Feedback</label>
+								<label for="feedback" style="color:dodgerblue;">Your Feedback</label>
 								<input type="text" class="form-control" placeholder="Submit your valueable feedback" name="feedback" id="feedback">
 							</div>
 							<input type="submit" value="Submit" class="btn btn-block btn-primary">
