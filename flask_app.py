@@ -25,8 +25,8 @@ app.config['SECRET_KEY'] = 'testingkeybutnotrealkey'
 #app.config['TESTING'] = False
 
 
-UPLOAD_FOLDER = 'static/upload/'
-ALLOWED_EXTENSIONS = ('png', 'jpg', 'jpeg', 'gif')
+UPLOAD_FOLDER = 'upload/'
+ALLOWED_EXTENSIONS = ('png', 'jpg', 'jpeg', 'gif','PNG')
 
 if not os.path.isdir(UPLOAD_FOLDER):
     os.mkdir(UPLOAD_FOLDER)
