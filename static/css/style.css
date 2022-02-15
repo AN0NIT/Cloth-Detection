@@ -38,7 +38,7 @@ color: mintcream;}
 
 
 .button{
-padding-left: 80px; 
+padding-left: 80px;
 padding-top: 250px;
 }
 
@@ -55,12 +55,28 @@ border-radius: 8px;
 }
 
 .button input[type="file"]{
-background-color:#879da1; 
+background-color:#879da1;
 color: black;
  font-family:roboto;
- font-size: 10px; 
-text-align: center; 
+ font-size: 10px;
+text-align: center;
 padding: 10px;
-padding-right: 0PX; 
+padding-right: 0PX;
 border-radius: 8px
+}
+
+.pop{
+  color: red;
+  background-color: white;
+  padding-left: 100px;
+  text-align: center;
+}
+.msg{
+    color: white;
+    background-color: rgb(255, 72, 72);
+    width: 330px;
+    height: 25px;
+    border: 1px dashed black;
+    border-radius: 3px;
+    text-align: center;
 }

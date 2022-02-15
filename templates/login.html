@@ -21,25 +21,25 @@
   <body >
     <header style=" display:flex; justify-content:flex-end; align-items:center; ">
     <nav style=" width:100%; height:70px; margin-left:-10px; margin-top:0px; margin-right:0px; background-color:dodgerblue; border-color:dodgerblue; ">
-      <img class="logo" src="/static/images/suyati_logo.svg" alt="logo" style="width:200px; height:50px; padding-top: 5px; padding-bottom: 5px;">
+      <img class="logo" src="/static/images/suyati_logo.svg" alt="logo" style="width:200px; height:50px; padding-top: 0px; padding-bottom: 5px; padding-right: 60px;">
 
       <ul class="nav_links" style="float: right; ">
 
-        <li style="padding:5px 20px 15px 20px;"><a style="color:yellow;font-size: 20px; font-weight: 400;" href="#">About us</a></li>
-        <li style="padding:5px 20px 15px 20px;"><a style="color:yellow;font-size: 20px;font-weight: 400;" href="#">Contact</a></li>
+        <li style="padding:5px 20px 15px 20px;"><a style="color:white;font-size: 20px; font-weight: 400;" href="#">About us</a></li>
+        <li style="padding:5px 20px 15px 20px;"><a style="color:white;font-size: 20px;font-weight: 400;" href="#">Contact</a></li>
         <!--<li style="padding: 10px 15px 10px 15px; font-weight:bold;"><a href="#">Logout</a></li>-->
       </ul>
-      <div style="width:100%; height:150px; margin-top:-10px; background-color:darkblue; ">
+      <div style="width:100%; height:150px; margin-top:-10px; background-color:white; ">
         <!--img src="/static/images/Welcome.svg" style="float: right; width:250px;height: 250px; padding-left:200px"-->
 
     </nav>
   </header>
-  <h3 style="padding-left: 460px;font-size: 30px; color: yellow; ">Welcome to Cloth Detection System!</h3>
-<p style="padding-left: 430px;font-size: 20px;color: yellow; ">Here we provide our customers with the best possible results</p>
+  <h3 style="padding-left: 460px;font-size: 30px; color: dodgerblue; ">Welcome to Cloth Detection System!</h3>
+<p style="padding-left: 460px;font-size: 20px; ">Here we provide our customers with the best possible results</p>
 
 
 
-  <div style="padding-top:50px;" class="half">
+  <div style="padding-top:30px;" class="half">
     <div class="bg order-1 order-md-2" style="background-image: url('static/images/bg_10.png');" ></div>
     <div class="contents order-2 order-md-1">
       <div style="background-color: whitesmoke; padding-top: 20px; padding-bottom: 20px ; align-self: center;" class="container">
@@ -47,10 +47,22 @@
           <div class="col-md-6">
             <div class="form-block">
               <div class="text-center mb-5">
-              <h3>Login</h3>
+              <h3 style="color: dodgerblue;">Login</h3>
+              <!-- <div class="pop">
+               <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
               {% for mesg in get_flashed_messages() %}
                 <h5>{{ mesg }}</h5>
               {% endfor %}
+            </div> -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                  <h5>{{ message }}</h5>
+            {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
               </div>
               <div class="text-right mb-9">
               <h9>Don't Have an Account?

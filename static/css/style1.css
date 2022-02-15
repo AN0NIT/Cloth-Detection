@@ -39,7 +39,7 @@
     display: inline-block;
     padding: 13px 10px 13px 10px;
     text-decoration: none;
-    color:yellow;
+    color:white;
   }
 
   .nav > .nav-links > a:hover {
@@ -136,16 +136,33 @@
 	border-bottom: 1px solid #999;
 	text-align: center;
 }
+.pop{
+  color: red;
+  background-color: white;
+  text-align: center;
+}
+
+.msg{
+  color: white;
+  background-color: red;
+  width: 330px;
+  height: 25px;
+  border: 3px dashed black;
+  border-radius: 3px;
+  text-align: center;
+}
 
 h1 {
 	font-size: 16px;
 	font-weight: 300;
 	color: #666;
 }
-
+.new{
+  padding-left: 19px;
+}
 .dropzone {
 	width: 100px;
-	height: 90px;
+	height: 70px;
 	border: 1px dashed black;
 	border-radius: 3px;
 	text-align: center;
@@ -170,7 +187,7 @@ h1 {
 	height: 40px;
 	background: darkblue;
 	color: #fff;
-	border-radius: 3px;
+	border-radius: 10px;
 	border: 0;
 	box-shadow: 0 3px 0 0 dodgerblue;
 	transition: all 0.3s ease-in-out;

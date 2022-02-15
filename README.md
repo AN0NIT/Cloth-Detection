@@ -1,2 +1,2 @@
 # Cloth-Detection
-Using DeepLearning to perform cloth color detection, with basic web UI.
+Using DeepLearning to perform cloth detection and distinction, with basic web UI.
