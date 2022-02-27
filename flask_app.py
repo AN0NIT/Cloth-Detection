@@ -8,6 +8,12 @@ from flask_bcrypt import Bcrypt
 import os
 import time
 import random
+# For the DL
+import numpy as np
+from image2mnist import imageprepare   #To convert image to mnist data
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing import image
+from keras.applications.imagenet_utils import preprocess_input
 
 # Initialize flask app
 app = Flask(__name__)
@@ -25,8 +31,11 @@ app.config['SECRET_KEY'] = 'testingkeybutnotrealkey'
 #app.config['TESTING'] = False
 
 
-UPLOAD_FOLDER = 'upload/'
-ALLOWED_EXTENSIONS = ('png', 'jpg', 'jpeg', 'gif','PNG')
+UPLOAD_FOLDER = 'static/upload/'
+ALLOWED_EXTENSIONS = ('png', 'jpg', 'jpeg')
+MODEL_NAME = "model/my_model2.h5"
+model = load_model(MODEL_NAME)
+model.make_predict_function()
 
 if not os.path.isdir(UPLOAD_FOLDER):
     os.mkdir(UPLOAD_FOLDER)
@@ -47,6 +56,16 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True,nullable=False)
     password = db.Column(db.String(80), nullable=False)
+
+# Passes the model and the image to be predicted.
+def model_predict(img_path, model):
+    first_image = np.array(imageprepare(img_path), dtype='float32')
+    first_image = first_image.reshape((28,28))
+    predictions = model.predict(np.expand_dims(first_image,0))
+    out = np.argmax(predictions)
+    class_labels = ["T-shirt","Trouser","Pullover","Dress","Coat","Footwear","Shirt","Footwear","Bag","Footwear"]
+    return class_labels[out]
+
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -133,9 +152,6 @@ def dashboard():
             print('{file} and {allowed_file(file.filename)}')
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
-                #flash("fname:",filename)
-                #file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                #flash(file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename)))
                 return redirect(url_for('success', name=filename))
             else:
                 flash("File type not allowed.","danger")
@@ -162,8 +178,13 @@ def success():
                 return redirect(url_for('dashboard'))
                 #return redirect('/')
             elif f.filename.endswith(ALLOWED_EXTENSIONS):
-                f.save(os.path.join(app.config['UPLOAD_FOLDER'],f.filename))
-                flash(f"It is a {type}","success")
+                fname = os.path.join(app.config['UPLOAD_FOLDER'],f.filename)
+                f.save(fname)
+                preds = model_predict(fname,model)
+                if preds.lower() == "no cloth found.":
+                    flash(f"{preds}","error")
+                else:
+                    flash(f"It is a {preds}","success")
                 return render_template("success.html", fname='upload/'+f.filename)
             else:
                 flash('Invalid file extention',"danger")
