@@ -40,6 +40,8 @@ model.make_predict_function()
 if not os.path.isdir(UPLOAD_FOLDER):
     os.mkdir(UPLOAD_FOLDER)
 
+
+
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 login_manager = LoginManager()
@@ -178,6 +180,8 @@ def success():
                 return redirect(url_for('dashboard'))
                 #return redirect('/')
             elif f.filename.endswith(ALLOWED_EXTENSIONS):
+                if not os.path.isdir(app.config['UPLOAD_FOLDER']):
+                    os.mkdir(app.config['UPLOAD_FOLDER'])
                 fname = os.path.join(app.config['UPLOAD_FOLDER'],f.filename)
                 f.save(fname)
                 preds = model_predict(fname,model)
