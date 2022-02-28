@@ -34,13 +34,14 @@
 <h1 style="color:#000000; font-size:50px; font-family: monospace; padding-left: 150px">File uploaded successfully!</p>
 <h2 style="color: dodgerblue; padding-left: 900px;">File Name: {{name}}</p> -->
 <br></br>
-<div class="row">
-  <div class="col" style="padding-left:5%;">
+<!--div class="row">
+  <div class="col" style="position: center;"-->
+	  <div>
 		{% with messages = get_flashed_messages(with_categories=true) %}
 		{% if messages %}
 			{% for category, message in messages %}
-			<div style="padding-left:18px;">
-			<div class="alert alert-{{ category }}" style="max-width:69%; max-height: 75%;text-align: center;position:center;" >
+			<div style="padding-left:460px;">
+			<div class="alert alert-{{ category }}" style="max-width:50%; max-height: 75%;text-align: center;position:center;" >
 						<h5>{{ message }}</h5>
 			{% endfor %}
 			</div>
@@ -48,10 +49,10 @@
 		{% endwith %}
 		{% if fname %}
 		</div>
-		<img class="img-responsive" src="{{url_for('static', filename=fname)}}" style="max-width:75%; max-height: 75%;position:center;padding-top:25px;padding-left:19px">
+		<img class="img-responsive" src="{{url_for('static', filename=fname)}}" style="max-width:60%; max-height: 60%;position:center;padding-top:25px;padding-left:540px">
 		{% endif %}
   </div>
-  <div class="col" style="padding-right:40px;">
+  <!--div class="col" style="padding-right:40px;">
 	<div style="padding-left: 79px;">
 	 <div class="alert alert-info"  style="max-width:94%; max-height: 105%;text-align:center;">
 					<h5>Prediction Graph</h5>
@@ -60,13 +61,13 @@
   <!--div class="col" style="padding-right:40px;">
 	   <div style="padding-left: 50px;">
 
-	   </div-->
+	   </div>
 				<img class="img-responsive" src="{{ url_for('static', filename='images/output.jpg')}}" style="max-width:105%; max-height: 105%;position:center;">
   </div>
 </div>
-</div>
+</div-->
 
-<div style="padding-top:30px;" class="half">
+<div style="padding-top:50px;" class="half">
 	<div class="bg order-1 order-md-2" style="background-image: url('/static/images/bg_8');"></div>
 	<div class="contents order-2 order-md-1">
 		<div style="background-color: whitesmoke; padding-top: 20px; padding-bottom: 20px ; align-self: center;" class="container">
@@ -118,6 +119,5 @@
 
 
 <!-- <img src="{{ url_for('static', filename='images/image2.svg')}}" style="position:fixed;padding-top:80px;  width:350px; height:300px"> -->
-
 </body>
 </html>
