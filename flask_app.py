@@ -22,7 +22,8 @@ db =  SQLAlchemy(app)
 # Create an object for Bcrypt to hash the password
 bcrypt = Bcrypt(app)
 # Connect to DB
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://pqsgubluiyctxp:5b9b817c5c1302ab4c89396f3ec94a4754b4eee52918c278e9acb530ffdef8ee@ec2-34-236-88-129.compute-1.amazonaws.com:5432/d80j75mstf9gl3'
 # To secure the session cookie.
 # This key has to be set as environ variable, but for experimentation it is displayed in clear text
 #app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
