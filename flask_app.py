@@ -8,12 +8,18 @@ from flask_bcrypt import Bcrypt
 import os
 import time
 import random
-# For the DL
+
+# For DL
 import numpy as np
-from image2mnist import imageprepare   #To convert image to mnist data
-from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing import image
-from keras.applications.imagenet_utils import preprocess_input
+import torch
+import os
+import cv2
+from yolo.utils.utils import *
+from predictors.YOLOv3 import YOLOv3Predictor
+import glob
+from tqdm import tqdm
+import sys
+
 
 # Initialize flask app
 app = Flask(__name__)
@@ -23,6 +29,7 @@ db =  SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 # Connect to DB
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://pqsgubluiyctxp:5b9b817c5c1302ab4c89396f3ec94a4754b4eee52918c278e9acb530ffdef8ee@ec2-34-236-88-129.compute-1.amazonaws.com:5432/d80j75mstf9gl3'
 # To secure the session cookie.
 # This key has to be set as environ variable, but for experimentation it is displayed in clear text
 #app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
@@ -33,14 +40,9 @@ app.config['SECRET_KEY'] = 'testingkeybutnotrealkey'
 
 UPLOAD_FOLDER = 'static/upload/'
 ALLOWED_EXTENSIONS = ('png', 'jpg', 'jpeg')
-MODEL_NAME = "model/my_model2.h5"
-model = load_model(MODEL_NAME)
-model.make_predict_function()
 
 if not os.path.isdir(UPLOAD_FOLDER):
     os.mkdir(UPLOAD_FOLDER)
-
-
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -60,14 +62,73 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(80), nullable=False)
 
 # Passes the model and the image to be predicted.
-def model_predict(img_path, model):
-    first_image = np.array(imageprepare(img_path), dtype='float32')
-    first_image = first_image.reshape((28,28))
-    predictions = model.predict(np.expand_dims(first_image,0))
-    out = np.argmax(predictions)
-    class_labels = ["T-shirt","Trouser","Pullover","Dress","Coat","Footwear","Shirt","Footwear","Bag","Footwear"]
-    return class_labels[out]
+def model_predict(img_path):
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    torch.cuda.empty_cache()
+    yolo_modanet_params = {   "model_def" : "yolo/modanetcfg/yolov3-modanet.cfg",
+    "weights_path" : "yolo/weights/yolov3-modanet_last.weights",
+    "class_path":"yolo/modanetcfg/modanet.names",
+    "conf_thres" : 0.5,
+    "nms_thres" :0.4,
+    "img_size" : 416,
+    "device" : device}
+    dataset = 'modanet'
+    yolo_params = yolo_modanet_params
+    #Classes
+    classes = load_classes(yolo_params["class_path"])
 
+    #Colors
+    cmap = plt.get_cmap("rainbow")
+    colors = np.array([cmap(i) for i in np.linspace(0, 1, 13)])
+    detectron = YOLOv3Predictor(params=yolo_params)
+    model = 'yolo'
+
+    img_items = []
+    path = img_path
+    if not os.path.isfile(path):
+        print('Img does not exists..')
+        return "",[]
+
+    img = cv2.imread(img_path)
+    detections = detectron.get_detections(img)
+    if len(detections) != 0 :
+        detections.sort(reverse=False ,key = lambda x:x[4])
+        for x1, y1, x2, y2, cls_conf, cls_pred in detections:
+                if cls_conf < 0.8:
+                    continue
+                print("\t+ Label: %s, Conf: %.5f" % (classes[int(cls_pred)], cls_conf))
+                img_items.append(classes[int(cls_pred)])
+                #color = bbox_colors[np.where(unique_labels == cls_pred)[0]][0]
+                color = colors[int(cls_pred)]
+
+                color = tuple(c*255 for c in color)
+                color = (.7*color[2],.7*color[1],.7*color[0])
+
+                font = cv2.FONT_HERSHEY_SIMPLEX
+
+
+                x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
+                text =  "%s conf: %.3f" % (classes[int(cls_pred)] ,cls_conf)
+
+                cv2.rectangle(img,(x1,y1) , (x2,y2) , color,3)
+                y1 = 0 if y1<0 else y1
+                y1_rect = y1-25
+                y1_text = y1-5
+
+                if y1_rect<0:
+                    y1_rect = y1+27
+                    y1_text = y1+20
+                cv2.rectangle(img,(x1-2,y1_rect) , (x1 + int(8.5*len(text)),y1) , color,-1)
+                cv2.putText(img,text,(x1,y1_text), font, 0.5,(255,255,255),1,cv2.LINE_AA)
+        #cv2.imshow('Detections',img)
+        img_id = random.randint(100, 900)
+        final_path = 'static/upload/ouput_test_{}_{}_{}.jpg'.format(img_id,model,dataset)
+        print(final_path)
+        print(os.path.join(os.getcwd(), final_path))
+        if not cv2.imwrite(os.path.join(os.getcwd(), final_path),img):
+            raise Exception(f"Could not write image {final_path}")
+        cv2.imwrite(os.path.join(os.getcwd(), final_path),img)
+        return final_path,img_items
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -121,7 +182,7 @@ def register():
             flash("Please enter the password","warning")
             return render_template("register.html")
         if REPASS == PASSW:
-            salt = app.config['SECRET_KEY']
+            #salt = app.config['SECRET_KEY']
             hashed_password = bcrypt.generate_password_hash(PASSW)
             #hashed_password = bcrypt.hashpw(PASSW, salt)
             new_user = User(username=USRN, password=hashed_password)
@@ -164,8 +225,6 @@ def dashboard():
 
 @app.route('/success', methods = ['GET','POST'])
 def success():
-    cloths = ["shirt","hoodie","tshirt","suit"]
-    type = random.choice(cloths)
     if request.method == 'POST':
         try:
             feedback = request.form['feedback']
@@ -178,18 +237,25 @@ def success():
             if f.filename is None or f.filename == '':
                 flash('No selected file',"warning")
                 return redirect(url_for('dashboard'))
-                #return redirect('/')
             elif f.filename.endswith(ALLOWED_EXTENSIONS):
                 if not os.path.isdir(app.config['UPLOAD_FOLDER']):
                     os.mkdir(app.config['UPLOAD_FOLDER'])
                 fname = os.path.join(app.config['UPLOAD_FOLDER'],f.filename)
                 f.save(fname)
-                preds = model_predict(fname,model)
-                if preds.lower() == "no cloth found.":
-                    flash(f"{preds}","error")
+                try:
+                    fpath,preds = model_predict(fname)
+                except:
+                    flash(f"No cloth found","error")
+                    return redirect(url_for('dashboard'))
+                fpath = fpath.split('static/upload/')[-1]
+                print(fpath,preds)
+                if preds == []:
+                    flash(f"No cloth found","error")
+                    return redirect(url_for('dashboard'))
                 else:
-                    flash(f"It is a {preds}","success")
-                return render_template("success.html", fname='upload/'+f.filename)
+                    items = ",".join( x for x in preds)
+                    flash(f"Image contains {items}","success")
+                return render_template("success.html", fname="upload/"+fpath)
             else:
                 flash('Invalid file extention',"danger")
                 return redirect(url_for('dashboard'))
